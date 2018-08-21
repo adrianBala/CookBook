@@ -9,10 +9,14 @@ public class User {
     public User() {
     }
 
-    public User(long id, String nickName, List<Recipe> recipes) {
-        this.id = id;
+    public User(String nickName, List<Recipe> recipes) {
         this.nickName = nickName;
         this.recipes = recipes;
+    }
+
+    public User(long id, String nickName, List<Recipe> recipes) {
+        this(nickName, recipes);
+        this.id = id;
     }
 
     public long getId() {
