@@ -1,10 +1,23 @@
 package com.codecool.krk.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "review")
 public class Review {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
     private long id;
+   @Id @GeneratedValue
+    @Column(name = "rating")
     private int rating;
+
+    @Column(name = "opinion")
     private String opinion;
+
+    @Column(name = "author")
     private String author;
 
     public Review() {
