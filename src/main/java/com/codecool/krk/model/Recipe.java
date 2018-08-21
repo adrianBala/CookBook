@@ -25,8 +25,8 @@ public class Recipe {
         this.category = category;
     }
 
-    public Recipe(String name, User author, String instruction, Category categor, long id) {
-        this(name, author, instruction, categor);
+    public Recipe(String name, User author, String instruction, Category category, long id) {
+        this(name, author, instruction, category);
         this.id = id;
     }
 
