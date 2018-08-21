@@ -1,6 +1,5 @@
 package com.codecool.krk.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe {
@@ -16,17 +15,17 @@ public class Recipe {
     public Recipe() {
     }
 
-    public Recipe(String name, User author, String instruction, Category category) {
+    public Recipe(String name, User author, List<Ingredient> ingredients, String instruction, List<Review> reviews,  Category category) {
         this.name = name;
         this.author = author;
-        this.ingredients = new ArrayList<Ingredient>();
+        this.ingredients = ingredients;
         this.instruction = instruction;
-        this.reviews = new ArrayList<Review>();
+        this.reviews = reviews;
         this.category = category;
     }
 
-    public Recipe(String name, User author, String instruction, Category category, long id) {
-        this(name, author, instruction, category);
+    public Recipe(String name, User author, List<Ingredient> ingredients, String instruction, List<Review> reviews,  Category category, long id) {
+        this(name, author, ingredients, instruction, reviews, category);
         this.id = id;
     }
 
