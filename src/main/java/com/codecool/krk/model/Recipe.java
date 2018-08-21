@@ -14,17 +14,20 @@ public class Recipe {
     private Category category;
 
     public Recipe() {
-
     }
 
-    public Recipe(long id, String name, User author, String instruction, Category category) {
-        this.id = id;
+    public Recipe(String name, User author, String instruction, Category category) {
         this.name = name;
         this.author = author;
         this.ingredients = new ArrayList<Ingredient>();
         this.instruction = instruction;
         this.reviews = new ArrayList<Review>();
         this.category = category;
+    }
+
+    public Recipe(String name, User author, String instruction, Category categor, long id) {
+        this(name, author, instruction, categor);
+        this.id = id;
     }
 
     public long getId() {
@@ -81,5 +84,18 @@ public class Recipe {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", author=" + author +
+                ", ingredients=" + ingredients +
+                ", instruction='" + instruction + '\'' +
+                ", reviews=" + reviews +
+                ", category=" + category +
+                '}';
     }
 }
