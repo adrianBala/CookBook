@@ -37,4 +37,14 @@ public class Ingredient {
     public void setUnit(Unit unit) {
         this.unit = unit;
     }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "name='" + name + '\'' +
+                ", amount=" + amount +
+                ", unit=" + unit +
+                '}';
+    }
+    
 }
