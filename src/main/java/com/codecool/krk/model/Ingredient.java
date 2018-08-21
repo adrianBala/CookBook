@@ -46,5 +46,5 @@ public class Ingredient {
                 ", unit=" + unit +
                 '}';
     }
-    
+
 }
