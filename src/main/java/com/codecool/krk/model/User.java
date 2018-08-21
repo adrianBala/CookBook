@@ -1,5 +1,7 @@
 package com.codecool.krk.model;
 
+import java.util.List;
+
 public class User {
 
     private long id;
