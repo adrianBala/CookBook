@@ -1,5 +1,8 @@
 package com.codecool.krk.model;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Ingredient {
 
     private String name;
