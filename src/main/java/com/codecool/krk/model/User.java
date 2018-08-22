@@ -1,11 +1,20 @@
 package com.codecool.krk.model;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "user")
 public class User {
 
+    @Id
+    @GeneratedValue
     private long id;
+
+    @Column(name = "nick_name", nullable = false, unique = true)
     private String nickName;
+
+    @OneToMany
     private List<Recipe> recipes;
 
     public User() {

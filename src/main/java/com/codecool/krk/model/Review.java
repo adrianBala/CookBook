@@ -1,7 +1,13 @@
 package com.codecool.krk.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "review")
 public class Review {
 
+    @Id
+    @GeneratedValue
     private long id;
     private int rating;
     private String opinion;
