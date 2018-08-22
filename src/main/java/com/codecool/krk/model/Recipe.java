@@ -24,6 +24,7 @@ public class Recipe {
     @OneToMany
     private List<Review> reviews;
 
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     public Recipe() {
