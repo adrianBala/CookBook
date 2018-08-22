@@ -1,17 +1,18 @@
 package com.codecool.krk.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name="INGREDIENTS")
+@Table(name="ingredients")
 public class Ingredient {
-    @Column(name="NAME")
+    @Id
+    @GeneratedValue
+    private long id;
+    @Column(name="name")
     private String name;
-    @Column(name="AMOUNT")
+    @Column(name="amount")
     private double amount;
-    @Column(name="UNIT")
+    @Column(name="unit")
     private Unit unit;
 
     public Ingredient() {}
@@ -20,6 +21,11 @@ public class Ingredient {
         this.name = name;
         this.amount = amount;
         this.unit = unit;
+    }
+
+    public Ingredient(long id, String name, double amount, Unit unit) {
+        this(name, amount, unit);
+        this.id = id;
     }
 
     public String getName() {
