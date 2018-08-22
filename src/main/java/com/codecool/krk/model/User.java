@@ -14,7 +14,7 @@ public class User {
     @Column(name = "nick_name", nullable = false, unique = true)
     private String nickName;
 
-    @OneToMany
+    @OneToMany(mappedBy = "author")
     private List<Recipe> recipes;
 
     public User() {
