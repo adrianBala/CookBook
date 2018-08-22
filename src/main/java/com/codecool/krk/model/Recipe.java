@@ -1,15 +1,29 @@
 package com.codecool.krk.model;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Recipe {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column
     private String name;
+
+    @ManyToOne
     private User author;
+
+    @OneToMany
     private List<Ingredient> ingredients;
+
     private String instruction;
+
+    @OneToMany
     private List<Review> reviews;
+
     private Category category;
 
     public Recipe() {
