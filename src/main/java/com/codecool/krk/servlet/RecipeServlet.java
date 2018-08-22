@@ -1,6 +1,7 @@
 package com.codecool.krk.servlet;
 
 import com.codecool.krk.dao.RecipeDao;
+import com.codecool.krk.dao.RecipeDaoImpl;
 import com.codecool.krk.model.Recipe;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @WebServlet("/recipes")
 public class RecipeServlet extends HttpServlet {
 
-    RecipeDao recipeDao = new RecipeDao();
+    RecipeDao recipeDao = new RecipeDaoImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

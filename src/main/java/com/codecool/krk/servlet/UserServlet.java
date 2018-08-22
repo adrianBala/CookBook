@@ -1,6 +1,7 @@
 package com.codecool.krk.servlet;
 
 import com.codecool.krk.dao.UserDao;
+import com.codecool.krk.dao.UserDaoImpl;
 import com.codecool.krk.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @WebServlet("/users")
 public class UserServlet extends HttpServlet {
 
-    UserDao userDao = new UserDao();
+    UserDao userDao = new UserDaoImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
