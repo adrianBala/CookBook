@@ -3,7 +3,6 @@ package com.codecool.krk.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "review")
 public class Review {
 
     @Id
@@ -12,6 +11,9 @@ public class Review {
     private int rating;
     private String opinion;
     private String author;
+
+    @ManyToOne
+    private Recipe recipe;
 
     public Review() {
 
@@ -59,6 +61,14 @@ public class Review {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 
     @Override
