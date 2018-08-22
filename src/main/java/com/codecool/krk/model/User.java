@@ -4,14 +4,14 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User {
 
     @Id
     @GeneratedValue
     private long id;
 
-    @Column(name="nick_name")
+    @Column(name = "nick_name", nullable = false, unique = true)
     private String nickName;
 
     @OneToMany
