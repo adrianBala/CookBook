@@ -3,7 +3,6 @@ package com.codecool.krk.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="ingredients")
 public class Ingredient {
     @Id
     @GeneratedValue
@@ -14,6 +13,9 @@ public class Ingredient {
     private double amount;
     @Column(name="unit")
     private Unit unit;
+
+    @ManyToOne
+    private Recipe recipe;
 
     public Ingredient() {}
 
@@ -26,6 +28,22 @@ public class Ingredient {
     public Ingredient(long id, String name, double amount, Unit unit) {
         this(name, amount, unit);
         this.id = id;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 
     public String getName() {
