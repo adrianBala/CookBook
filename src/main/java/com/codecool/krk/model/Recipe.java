@@ -3,7 +3,7 @@ package com.codecool.krk.model;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+@Entity(name = "Recipes")
 public class Recipe {
 
     @Id
