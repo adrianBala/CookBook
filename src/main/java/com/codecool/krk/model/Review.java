@@ -10,7 +10,7 @@ public class Review {
     @GeneratedValue
     @Column(name = "id")
     private long id;
-   @Id @GeneratedValue
+
     @Column(name = "rating")
     private int rating;
 
