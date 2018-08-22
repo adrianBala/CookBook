@@ -3,7 +3,7 @@ package com.codecool.krk.model;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity(name = "Recipes")
+@Entity
 public class Recipe {
 
     @Id
@@ -16,12 +16,12 @@ public class Recipe {
     @ManyToOne
     private User author;
 
-    @OneToMany
+    @OneToMany(mappedBy = "recipe")
     private List<Ingredient> ingredients;
 
     private String instruction;
 
-    @OneToMany
+    @OneToMany(mappedBy = "recipe")
     private List<Review> reviews;
 
     @Enumerated(EnumType.STRING)
