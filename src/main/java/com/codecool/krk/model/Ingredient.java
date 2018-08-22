@@ -1,12 +1,17 @@
 package com.codecool.krk.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="INGREDIENTS")
 public class Ingredient {
-
+    @Column(name="NAME")
     private String name;
+    @Column(name="AMOUNT")
     private double amount;
+    @Column(name="UNIT")
     private Unit unit;
 
     public Ingredient() {}
