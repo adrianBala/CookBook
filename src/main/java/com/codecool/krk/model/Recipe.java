@@ -100,6 +100,10 @@ public class Recipe {
         this.category = category;
     }
 
+    public void addReview(Review review) {
+        this.reviews.add(review);
+    }
+
     @Override
     public String toString() {
         return "Recipe{" +
