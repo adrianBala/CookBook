@@ -1,5 +1,7 @@
 package com.codecool.krk.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,6 +15,7 @@ public class Review {
     private String author;
 
     @ManyToOne
+    @JsonBackReference
     private Recipe recipe;
 
     public Review() {

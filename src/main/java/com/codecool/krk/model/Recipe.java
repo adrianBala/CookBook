@@ -1,5 +1,8 @@
 package com.codecool.krk.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -14,14 +17,17 @@ public class Recipe {
     private String name;
 
     @ManyToOne
+    @JsonBackReference
     private User author;
 
     @OneToMany(mappedBy = "recipe")
+    @JsonManagedReference
     private List<Ingredient> ingredients;
 
     private String instruction;
 
     @OneToMany(mappedBy = "recipe")
+    @JsonManagedReference
     private List<Review> reviews;
 
     @Enumerated(EnumType.STRING)

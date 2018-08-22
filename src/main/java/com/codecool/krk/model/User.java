@@ -1,5 +1,7 @@
 package com.codecool.krk.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -15,9 +17,16 @@ public class User {
     private String nickName;
 
     @OneToMany(mappedBy = "author")
+    @JsonManagedReference
     private List<Recipe> recipes;
 
     public User() {
+    }
+
+    public User(User user) {
+        this.id = user.id;
+        this.nickName = user.nickName;
+        this.recipes = user.recipes;
     }
 
     public User(String nickName, List<Recipe> recipes) {
@@ -59,7 +68,6 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", nickName='" + nickName + '\'' +
-                ", recipes=" + recipes +
                 '}';
     }
 }

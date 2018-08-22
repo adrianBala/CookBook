@@ -1,5 +1,7 @@
 package com.codecool.krk.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,7 @@ public class Ingredient {
     private Unit unit;
 
     @ManyToOne
+    @JsonBackReference
     private Recipe recipe;
 
     public Ingredient() {}
