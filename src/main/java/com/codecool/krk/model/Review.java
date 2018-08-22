@@ -8,16 +8,9 @@ public class Review {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
     private long id;
-
-    @Column(name = "rating")
     private int rating;
-
-    @Column(name = "opinion")
     private String opinion;
-
-    @Column(name = "author")
     private String author;
 
     public Review() {
