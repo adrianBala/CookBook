@@ -7,6 +7,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
@@ -41,7 +42,7 @@ public class UserDaoImpl implements UserDao {
     public List<User> loadAllUsers() {
         EntityManager em = HibernateUtil.getEntityManager();
 
-        List<User> users = null;
+        List<User> users = new ArrayList<>();
         try {
             em.getTransaction().begin();
             users = em.createQuery("from User ").getResultList();
