@@ -3,6 +3,7 @@ package com.codecool.krk.servlet;
 import com.codecool.krk.dao.UserDao;
 import com.codecool.krk.dao.UserDaoImpl;
 import com.codecool.krk.model.User;
+import com.codecool.krk.util.UriParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -21,9 +22,7 @@ public class SingleUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
 
-        String uri = req.getRequestURI();
-        String [] splitUri = uri.split("/");
-        long id = Long.parseLong(splitUri[2]);
+        long id = UriParser.extractIdFromUri(req.getRequestURI());
 
         User user = userDao.loadUser(id);
         if (user != null) {
@@ -33,19 +32,14 @@ public class SingleUserServlet extends HttpServlet {
         } else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
-
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String uri = req.getRequestURI();
-        String [] splitUri = uri.split("/");
-        long id = Long.parseLong(splitUri[2]);
+        long id = UriParser.extractIdFromUri(req.getRequestURI());
 
         boolean isDeleted = userDao.removeUser(id);
-        if (isDeleted) {
-            resp.setStatus(HttpServletResponse.SC_OK);
-        } else {
+        if (!isDeleted) {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
@@ -54,15 +48,10 @@ public class SingleUserServlet extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String nickName = req.getParameter("nickName");
 
-        String uri = req.getRequestURI();
-        String [] splitUri = uri.split("/");
-        long id = Long.parseLong(splitUri[2]);
+        long id = UriParser.extractIdFromUri(req.getRequestURI());
 
         boolean isUpdated = userDao.updateUser(id, nickName);
-
-        if (isUpdated) {
-            resp.setStatus(HttpServletResponse.SC_OK);
-        } else {
+        if (!isUpdated) {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
