@@ -35,16 +35,17 @@ public class RecipeDaoImpl implements RecipeDao {
     public boolean removeRecipe(long recipeId) {
         EntityManager em = HibernateUtil.getEntityManager();
         Recipe recipe = em.find(Recipe.class, recipeId);
-        if (!(recipe == null)) {
+        if (recipe != null) {
             em.getTransaction().begin();
             em.remove(recipe);
             em.getTransaction().commit();
-            return true;
-        } else {
-            em.getTransaction().rollback();
             em.close();
-            return false;
+            return true;
         }
+        em.getTransaction().rollback();
+        em.close();
+        return false;
+
     }
 
     @Override
@@ -68,6 +69,25 @@ public class RecipeDaoImpl implements RecipeDao {
         }
 
         return recipes;
+    }
+
+    @Override
+    public boolean updateRecipe(long id, String name, String instruction) {
+        EntityManager em = HibernateUtil.getEntityManager();
+        Recipe recipe = em.find(Recipe.class, id);
+
+        if (recipe != null) {
+            em.getTransaction().begin();
+            recipe.setName(name);
+            recipe.setInstruction(instruction);
+            em.persist(recipe);
+            em.getTransaction().commit();
+            em.close();
+            return true;
+        }
+        em.getTransaction().rollback();
+        em.close();
+        return false;
     }
 
 }
