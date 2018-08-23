@@ -19,14 +19,15 @@ public class UserDaoImpl implements UserDao {
         try {
             em.getTransaction().begin();
             user = em.find(User.class, id);
-            Hibernate.initialize(user.getRecipes());
-            for (Recipe recipe : user.getRecipes()) {
-                Hibernate.initialize(recipe.getReviews());
-                Hibernate.initialize(recipe.getIngredients());
+            if (user != null) {
+                Hibernate.initialize(user.getRecipes());
+                for (Recipe recipe : user.getRecipes()) {
+                    Hibernate.initialize(recipe.getReviews());
+                    Hibernate.initialize(recipe.getIngredients());
+                }
             }
-
             em.getTransaction().commit();
-        } catch (HibernateException e) {
+        } catch (HibernateException | IllegalArgumentException e) {
             em.getTransaction().rollback();
             e.printStackTrace();
         } finally {
@@ -72,7 +73,7 @@ public class UserDaoImpl implements UserDao {
             User user = em.find(User.class, id);
             em.remove(user);
             em.getTransaction().commit();
-        } catch (HibernateException e) {
+        } catch (HibernateException | IllegalArgumentException e) {
             em.getTransaction().rollback();
             e.printStackTrace();
             return false;
