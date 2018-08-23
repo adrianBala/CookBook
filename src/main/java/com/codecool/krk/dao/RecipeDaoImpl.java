@@ -6,6 +6,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeDaoImpl implements RecipeDao {
@@ -51,7 +52,7 @@ public class RecipeDaoImpl implements RecipeDao {
     public List<Recipe> loadAllRecipes() {
         EntityManager em = HibernateUtil.getEntityManager();
 
-        List<Recipe> recipes = null;
+        List<Recipe> recipes = new ArrayList<>();
         try {
             em.getTransaction().begin();
             recipes = em.createQuery("from Recipe").getResultList();
