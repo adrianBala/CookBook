@@ -26,11 +26,14 @@ public class SingleUserServlet extends HttpServlet {
         long id = Long.parseLong(splitUri[2]);
 
         User user = userDao.loadUser(id);
+        if (user != null) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String userJson = objectMapper.writeValueAsString(user);
+            resp.getWriter().print(userJson);
+        } else {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String userJson = objectMapper.writeValueAsString(user);
-
-        resp.getWriter().print(userJson);
     }
 
     @Override
@@ -40,7 +43,6 @@ public class SingleUserServlet extends HttpServlet {
         long id = Long.parseLong(splitUri[2]);
 
         boolean isDeleted = userDao.removeUser(id);
-
         if (isDeleted) {
             resp.setStatus(HttpServletResponse.SC_OK);
         } else {
