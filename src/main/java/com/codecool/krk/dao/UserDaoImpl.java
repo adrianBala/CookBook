@@ -99,4 +99,24 @@ public class UserDaoImpl implements UserDao {
         }
         return true;
     }
+
+    @Override
+    public boolean updateUser(long id, String nickName) {
+        EntityManager em = HibernateUtil.getEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            User user = em.find(User.class, id);
+            user.setNickName(nickName);
+            em.merge(user);
+            em.getTransaction().commit();
+        } catch (HibernateException e) {
+            em.getTransaction().rollback();
+            e.printStackTrace();
+            return false;
+        } finally {
+            em.close();
+        }
+        return true;
+    }
 }

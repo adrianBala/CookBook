@@ -32,4 +32,36 @@ public class SingleUserServlet extends HttpServlet {
 
         resp.getWriter().print(userJson);
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String uri = req.getRequestURI();
+        String [] splitUri = uri.split("/");
+        long id = Long.parseLong(splitUri[2]);
+
+        boolean isDeleted = userDao.removeUser(id);
+
+        if (isDeleted) {
+            resp.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String nickName = req.getParameter("nickName");
+
+        String uri = req.getRequestURI();
+        String [] splitUri = uri.split("/");
+        long id = Long.parseLong(splitUri[2]);
+
+        boolean isUpdated = userDao.updateUser(id, nickName);
+
+        if (isUpdated) {
+            resp.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
+    }
 }
