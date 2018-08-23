@@ -110,7 +110,6 @@ public class UserDaoImpl implements UserDao {
             em.getTransaction().begin();
             User user = em.find(User.class, id);
             user.setNickName(nickName);
-            em.merge(user);
             em.getTransaction().commit();
         } catch (HibernateException e) {
             em.getTransaction().rollback();
