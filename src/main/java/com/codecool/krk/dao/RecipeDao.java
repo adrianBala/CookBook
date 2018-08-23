@@ -12,5 +12,5 @@ public interface RecipeDao {
 
     List<Recipe> loadAllRecipes();
 
-    boolean updateRecipe(Recipe recipe);
+    boolean updateRecipe(long id, String name, String instruction);
 }
