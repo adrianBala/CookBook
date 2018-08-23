@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/users")
-public class UserServlet extends HttpServlet {
+public class UsersServlet extends HttpServlet {
 
     UserDao userDao = new UserDaoImpl();
 
