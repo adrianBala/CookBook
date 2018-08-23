@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 public class Ingredient {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
     @Column(name="name")
     private String name;
