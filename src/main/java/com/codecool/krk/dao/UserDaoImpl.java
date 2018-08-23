@@ -99,4 +99,9 @@ public class UserDaoImpl implements UserDao {
         }
         return true;
     }
+
+    @Override
+    public boolean updateUser(long id, String nickName) {
+        return false;
+    }
 }
