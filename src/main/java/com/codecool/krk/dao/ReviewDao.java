@@ -4,5 +4,6 @@ import com.codecool.krk.model.Review;
 
 public interface ReviewDao {
 
-    void saveNewReview(Review review);
+    boolean saveNewReview(Review review);
+    boolean removeReview(long id);
 }
