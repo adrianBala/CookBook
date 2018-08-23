@@ -35,20 +35,20 @@ public class SingleRecipeServlet extends HttpServlet {
 
 
     @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
         String idPart = request.getPathInfo();
         Long id = null;
         try {
             id = Long.parseLong(idPart.substring(1));
             System.out.println(id);
         } catch(NumberFormatException e) {
-            //TODO send info about wrong type of input
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
 
         if (recipeDao.removeRecipe(id)) {
-            // TODO SUCCESSFUL
+            response.setStatus(HttpServletResponse.SC_ACCEPTED);
         } else {
-            // TODO send info about wrong id
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 }
