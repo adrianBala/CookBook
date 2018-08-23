@@ -18,8 +18,10 @@ public class RecipeDaoImpl implements RecipeDao {
         try {
             em.getTransaction().begin();
             recipe = em.find(Recipe.class, id);
-            Hibernate.initialize(recipe.getIngredients());
-            Hibernate.initialize(recipe.getReviews());
+            if(recipe != null) {
+                Hibernate.initialize(recipe.getIngredients());
+                Hibernate.initialize(recipe.getReviews());
+            }
             em.getTransaction().commit();
         } catch (HibernateException e) {
             em.getTransaction().rollback();
