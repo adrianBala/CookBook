@@ -14,17 +14,7 @@
   <url>http://localhost:8080/</url>
 
   <properties>
-    <version.java>1.8</version.java>
-    <version.eclipselink>2.6.2</version.eclipselink>
-    <version.hibernate.validator>5.1.2.Final</version.hibernate.validator>
-    <version.el>3.0.1-b03</version.el>
-    <version.mysql>5.1.21</version.mysql>
-    <version.postgres>42.1.1</version.postgres>
-    <version.maven.compiler.plugin>3.1</version.maven.compiler.plugin>
-    <version.maven.processor.plugin>2.2.4</version.maven.processor.plugin>
-    <version.junit>4.11</version.junit>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
 
   <dependencies>
@@ -38,6 +28,7 @@
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>3.1.0</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.postgresql</groupId>
@@ -45,23 +36,10 @@
       <version>42.1.4</version>
     </dependency>
     <dependency>
-      <groupId>org.eclipse.persistence</groupId>
-      <artifactId>org.eclipse.persistence.jpa</artifactId>
-      <version>${version.eclipselink}</version>
-    </dependency>
-    <!--<dependency>-->
-    <!--<groupId>org.eclipse.persistence</groupId>-->
-    <!--<artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>-->
-    <!--<version>${version.eclipselink}</version>-->
-    <!--</dependency>-->
-
-    <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-entitymanager</artifactId>
       <version>5.2.10.Final</version>
     </dependency>
-
-
   </dependencies>
 
   <build>
@@ -69,14 +47,22 @@
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <plugin>
-          <groupId>org.apache.tomcat.maven</groupId>
-          <artifactId>tomcat6-maven-plugin</artifactId>
-          <version>2.2</version>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.0</version>
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.tomcat.maven</groupId>
           <artifactId>tomcat7-maven-plugin</artifactId>
           <version>2.2</version>
+          <configuration>
+            <path>/</path>
+            <contextReloadable>true</contextReloadable>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
@@ -86,10 +72,6 @@
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.0.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.7.0</version>
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
