@@ -26,9 +26,9 @@ public class UsersServlet extends HttpServlet {
         List<User> users = userDao.loadAllUsers();
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String userJson = objectMapper.writeValueAsString(users);
+        String usersJson = objectMapper.writeValueAsString(users);
 
-        resp.getWriter().print(userJson);
+        resp.getWriter().print(usersJson);
     }
 
     @Override
