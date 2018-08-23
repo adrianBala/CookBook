@@ -1,5 +1,6 @@
 package com.codecool.krk.dao;
 
+import com.codecool.krk.exception.NoSuchElementInDatabaseException;
 import com.codecool.krk.model.Review;
 import com.codecool.krk.persistence.HibernateUtil;
 import org.hibernate.HibernateException;
@@ -36,11 +37,16 @@ public class ReviewDaoImpl implements ReviewDao {
         try {
             em.getTransaction().begin();
             Review review = em.find(Review.class, id);
+            if(review == null) {
+                throw new NoSuchElementInDatabaseException();
+            }
             em.remove(review);
             em.getTransaction().commit();
         } catch (HibernateException e) {
             em.getTransaction().rollback();
             e.printStackTrace();
+            return false;
+        } catch (NoSuchElementInDatabaseException e) {
             return false;
         } finally {
             em.close();
