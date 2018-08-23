@@ -63,6 +63,7 @@ public class UserDaoImpl implements UserDao {
         return users;
     }
 
+    @Override
     public boolean removeUser(long id) {
         EntityManager em = HibernateUtil.getEntityManager();
 
@@ -81,4 +82,21 @@ public class UserDaoImpl implements UserDao {
         return true;
     }
 
+    @Override
+    public boolean saveNewUser(User user) {
+        EntityManager em = HibernateUtil.getEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            em.persist(user);
+            em.getTransaction().commit();
+        } catch (HibernateException e) {
+            em.getTransaction().rollback();
+            e.printStackTrace();
+            return false;
+        } finally {
+            em.close();
+        }
+        return true;
+    }
 }
