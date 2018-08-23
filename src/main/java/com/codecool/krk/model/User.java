@@ -16,7 +16,7 @@ public class User {
     @Column(name = "nick_name", nullable = false, unique = true)
     private String nickName;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonManagedReference
     private List<Recipe> recipes;
 
