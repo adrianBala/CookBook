@@ -24,10 +24,13 @@ public class SingleReviewServlet extends HttpServlet {
         String id = path.substring(path.indexOf("/") + 1, path.indexOf("/reviews"));
         System.out.println(id);
         RecipeDao recipeDao = new RecipeDaoImpl();
-        Recipe recipe = recipeDao.loadRecipe(Long.parseLong(id));
-        if(recipe != null) {
+        try {
+            Recipe recipe = recipeDao.loadRecipe(Long.parseLong(id));
             review.setRecipe(recipe);
             reviewDao.saveNewReview(review);
+            resp.setStatus(HttpServletResponse.SC_OK);
+        } catch(NullPointerException e) {
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
 
     }
@@ -37,5 +40,6 @@ public class SingleReviewServlet extends HttpServlet {
         String opinion = req.getParameter("opinion");
         String author = req.getParameter("author");
         return new Review(rating, opinion, author);
+
     }
 }
