@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface RecipeDao {
     Recipe loadRecipe(long id);
-
+    boolean removeRecipe(long recipeId);
     List<Recipe> loadAllRecipes();
 }
