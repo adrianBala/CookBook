@@ -7,6 +7,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
@@ -19,14 +20,15 @@ public class UserDaoImpl implements UserDao {
         try {
             em.getTransaction().begin();
             user = em.find(User.class, id);
-            Hibernate.initialize(user.getRecipes());
-            for (Recipe recipe : user.getRecipes()) {
-                Hibernate.initialize(recipe.getReviews());
-                Hibernate.initialize(recipe.getIngredients());
+            if (user != null) {
+                Hibernate.initialize(user.getRecipes());
+                for (Recipe recipe : user.getRecipes()) {
+                    Hibernate.initialize(recipe.getReviews());
+                    Hibernate.initialize(recipe.getIngredients());
+                }
             }
-
             em.getTransaction().commit();
-        } catch (HibernateException e) {
+        } catch (HibernateException | IllegalArgumentException e) {
             em.getTransaction().rollback();
             e.printStackTrace();
         } finally {
@@ -40,7 +42,7 @@ public class UserDaoImpl implements UserDao {
     public List<User> loadAllUsers() {
         EntityManager em = HibernateUtil.getEntityManager();
 
-        List<User> users = null;
+        List<User> users = new ArrayList<>();
         try {
             em.getTransaction().begin();
             users = em.createQuery("from User ").getResultList();
@@ -72,7 +74,7 @@ public class UserDaoImpl implements UserDao {
             User user = em.find(User.class, id);
             em.remove(user);
             em.getTransaction().commit();
-        } catch (HibernateException e) {
+        } catch (HibernateException | IllegalArgumentException e) {
             em.getTransaction().rollback();
             e.printStackTrace();
             return false;
@@ -102,6 +104,20 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean updateUser(long id, String nickName) {
-        return false;
+        EntityManager em = HibernateUtil.getEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            User user = em.find(User.class, id);
+            user.setNickName(nickName);
+            em.getTransaction().commit();
+        } catch (HibernateException | NullPointerException e) {
+            em.getTransaction().rollback();
+            e.printStackTrace();
+            return false;
+        } finally {
+            em.close();
+        }
+        return true;
     }
 }

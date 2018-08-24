@@ -6,6 +6,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeDaoImpl implements RecipeDao {
@@ -18,10 +19,12 @@ public class RecipeDaoImpl implements RecipeDao {
         try {
             em.getTransaction().begin();
             recipe = em.find(Recipe.class, id);
-            Hibernate.initialize(recipe.getIngredients());
-            Hibernate.initialize(recipe.getReviews());
+            if (recipe != null) {
+                Hibernate.initialize(recipe.getIngredients());
+                Hibernate.initialize(recipe.getReviews());
+            }
             em.getTransaction().commit();
-        } catch (HibernateException e) {
+        } catch (HibernateException | IllegalArgumentException e) {
             em.getTransaction().rollback();
             e.printStackTrace();
         } finally {
@@ -52,7 +55,7 @@ public class RecipeDaoImpl implements RecipeDao {
     public List<Recipe> loadAllRecipes() {
         EntityManager em = HibernateUtil.getEntityManager();
 
-        List<Recipe> recipes = null;
+        List<Recipe> recipes = new ArrayList<>();
         try {
             em.getTransaction().begin();
             recipes = em.createQuery("from Recipe").getResultList();

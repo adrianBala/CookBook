@@ -26,21 +26,22 @@ public class UsersServlet extends HttpServlet {
         List<User> users = userDao.loadAllUsers();
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String userJson = objectMapper.writeValueAsString(users);
+        String usersJson = objectMapper.writeValueAsString(users);
 
-        resp.getWriter().print(userJson);
+        resp.getWriter().print(usersJson);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String nickName = req.getParameter("nickName");
-        System.out.println(nickName);
+        if (nickName == null) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
         User user = new User(nickName, new ArrayList<>());
-        boolean isSaved = userDao.saveNewUser(user);
 
-        if (isSaved) {
-            resp.setStatus(HttpServletResponse.SC_OK);
-        } else {
+        boolean isSaved = userDao.saveNewUser(user);
+        if (!isSaved) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
