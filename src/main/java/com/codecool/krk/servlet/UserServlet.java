@@ -15,19 +15,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/users")
-public class UsersServlet extends HttpServlet {
+public class UserServlet extends HttpServlet {
 
     UserDao userDao = new UserDaoImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
-
         List<User> users = userDao.loadAllUsers();
-
         ObjectMapper objectMapper = new ObjectMapper();
         String usersJson = objectMapper.writeValueAsString(users);
-
         resp.getWriter().print(usersJson);
     }
 
