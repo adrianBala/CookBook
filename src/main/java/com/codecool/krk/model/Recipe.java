@@ -20,13 +20,13 @@ public class Recipe {
     @JsonBackReference
     private User author;
 
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.REMOVE,orphanRemoval = true)
     @JsonManagedReference
     private List<Ingredient> ingredients;
 
     private String instruction;
 
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonManagedReference
     private List<Review> reviews;
 
