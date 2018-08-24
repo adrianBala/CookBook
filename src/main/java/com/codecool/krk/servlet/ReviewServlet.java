@@ -21,24 +21,13 @@ public class ReviewsServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         Review review = createReview(req);
-        String path = req.getPathInfo();
-        String id = path.substring(path.indexOf("/") + 1, path.indexOf("/reviews"));
-        System.out.println(id);
-        RecipeDao recipeDao = new RecipeDaoImpl();
-        Recipe recipe = recipeDao.loadRecipe(Long.parseLong(id));
-        if(recipe != null) {
-            review.setRecipe(recipe);
-            reviewDao.saveNewReview(review);
-            resp.setStatus(HttpServletResponse.SC_OK);
-        } else {
-            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        }
+        Recipe recipe = (Recipe) req.getAttribute("recipe");
+        review.setRecipe(recipe);
+        reviewDao.saveNewReview(review);
     }
 
     private Review createReview(HttpServletRequest req) {
-
         int rating = Integer.parseInt(req.getParameter("rating"));
         String opinion = req.getParameter("opinion");
         String author = req.getParameter("author");
