@@ -6,4 +6,6 @@ public interface ReviewDao {
 
     boolean saveNewReview(Review review);
     boolean removeReview(long id);
+
+    boolean updateReview(int rating, String opinion, String author, Long id);
 }
