@@ -3,6 +3,7 @@ package com.codecool.krk.servlet;
 import com.codecool.krk.dao.RecipeDao;
 import com.codecool.krk.dao.RecipeDaoImpl;
 import com.codecool.krk.model.Recipe;
+import com.codecool.krk.model.User;
 import com.codecool.krk.util.UriParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -19,7 +20,7 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet() //"/recipes/*")
+@WebServlet("/recipes/*")
 public class SingleRecipeServlet extends HttpServlet {
 
     RecipeDao recipeDao = new RecipeDaoImpl();
@@ -40,7 +41,20 @@ public class SingleRecipeServlet extends HttpServlet {
         }
 
     }
-    
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        long id = UriParser.extractIdFromUri(req.getRequestURI());
+        Recipe recipe = recipeDao.loadRecipe(id);
+        if(recipe != null) {
+            req.setAttribute("recipe", recipe);
+            req.getRequestDispatcher("/reviews").forward(req, resp);
+        } else {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
+
+    }
+
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
         String idPart = request.getPathInfo();
