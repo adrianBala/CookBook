@@ -24,11 +24,10 @@ public class SingleReviewServlet extends HttpServlet {
 
         String id = req.getPathInfo().replaceFirst("/", "");
         boolean isRemoved = reviewDao.removeReview(Long.parseLong(id));
-        System.out.println(id + isRemoved);
         if(isRemoved) {
             resp.setStatus(HttpServletResponse.SC_OK);
         } else {
-            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
 
     }
@@ -39,7 +38,7 @@ public class SingleReviewServlet extends HttpServlet {
         try {
             id = Long.parseLong(reviewId.substring(1));
         } catch (NumberFormatException e) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
 
         BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));
@@ -48,12 +47,11 @@ public class SingleReviewServlet extends HttpServlet {
         Map<String, String> parsedData = parseFromData(data);
         int rating = Integer.parseInt(parsedData.get("rating"));
         String opinion = parsedData.get("opinion");
-        String author = parsedData.get("author");
 
-        if (reviewDao.updateReview(rating, opinion, author, id)) {
+        if (reviewDao.updateReview(rating, opinion, id)) {
             resp.setStatus(HttpServletResponse.SC_ACCEPTED);
         } else {
-            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
