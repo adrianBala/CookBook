@@ -54,4 +54,25 @@ public class ReviewDaoImpl implements ReviewDao {
         return true;
     }
 
+    @Override
+    public boolean updateReview(int rating, String opinion, String author, Long id) {
+
+        EntityManager em = HibernateUtil.getEntityManager();
+        Review review = em.find(Review.class, id);
+
+        if (review != null) {
+            em.getTransaction().begin();
+            review.setRating(rating);
+            review.setOpinion(opinion);
+            review.setAuthor(author);
+            em.persist(review);
+            em.getTransaction().commit();
+            em.close();
+            return true;
+        }
+        em.getTransaction().rollback();
+        em.close();
+        return false;
+    }
+
 }
