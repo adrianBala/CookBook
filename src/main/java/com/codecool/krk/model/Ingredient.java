@@ -13,7 +13,7 @@ public class Ingredient {
     private String name;
     @Column(name="amount")
     private double amount;
-    @Column(name="unit")
+    @Enumerated(EnumType.STRING)
     private Unit unit;
 
     @ManyToOne
