@@ -76,4 +76,18 @@ public class SingleUserServlet extends HttpServlet {
         }
         return nameAndInstruction;
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        long id = UriParser.extractIdFromUri(req.getRequestURI());
+        System.out.println(id);
+        User user = userDao.loadUser(id);
+        if (user != null) {
+            req.setAttribute("user", user);
+            req.getRequestDispatcher("/recipes").forward(req, resp);
+        } else {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
+    }
 }
