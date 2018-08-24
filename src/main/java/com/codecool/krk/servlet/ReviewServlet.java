@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/reviews"})
-public class ReviewsServlet extends HttpServlet {
+public class ReviewServlet extends HttpServlet {
 
     ReviewDao reviewDao = new ReviewDaoImpl();
 
