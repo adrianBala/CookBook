@@ -11,7 +11,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet("/users/*")
 public class SingleUserServlet extends HttpServlet {
@@ -46,7 +52,11 @@ public class SingleUserServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String nickName = req.getParameter("nickName");
+        BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));
+        String data = br.readLine();
+
+        Map<String, String> parsedData = parseFromData(data);
+        String nickName = parsedData.get("nickName");
 
         long id = UriParser.extractIdFromUri(req.getRequestURI());
 
@@ -54,5 +64,16 @@ public class SingleUserServlet extends HttpServlet {
         if (!isUpdated) {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
+    }
+
+    private Map<String, String> parseFromData(String data) throws UnsupportedEncodingException {
+        Map<String, String> nameAndInstruction = new HashMap<>();
+        String[] pairs = data.split("&");
+        for (String pair : pairs) {
+            String[] keyValue = pair.split("=");
+            String value = new URLDecoder().decode(keyValue[1], "UTF-8");
+            nameAndInstruction.put(keyValue[0], value);
+        }
+        return nameAndInstruction;
     }
 }

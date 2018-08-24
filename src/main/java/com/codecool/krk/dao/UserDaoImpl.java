@@ -111,7 +111,7 @@ public class UserDaoImpl implements UserDao {
             User user = em.find(User.class, id);
             user.setNickName(nickName);
             em.getTransaction().commit();
-        } catch (HibernateException e) {
+        } catch (HibernateException | NullPointerException e) {
             em.getTransaction().rollback();
             e.printStackTrace();
             return false;
