@@ -12,9 +12,7 @@ public class ReviewDaoImpl implements ReviewDao {
 
     @Override
     public boolean saveNewReview(Review review) {
-
         EntityManager em = HibernateUtil.getEntityManager();
-
         try {
             em.getTransaction().begin();
             em.persist(review);
@@ -31,9 +29,7 @@ public class ReviewDaoImpl implements ReviewDao {
 
     @Override
     public boolean removeReview(long id) {
-
         EntityManager em = HibernateUtil.getEntityManager();
-
         try {
             em.getTransaction().begin();
             Review review = em.find(Review.class, id);
@@ -55,16 +51,13 @@ public class ReviewDaoImpl implements ReviewDao {
     }
 
     @Override
-    public boolean updateReview(int rating, String opinion, String author, Long id) {
-
+    public boolean updateReview(int rating, String opinion, long id) {
         EntityManager em = HibernateUtil.getEntityManager();
         Review review = em.find(Review.class, id);
-
         if (review != null) {
             em.getTransaction().begin();
             review.setRating(rating);
             review.setOpinion(opinion);
-            review.setAuthor(author);
             em.persist(review);
             em.getTransaction().commit();
             em.close();
