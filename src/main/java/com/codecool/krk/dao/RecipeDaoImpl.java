@@ -19,7 +19,7 @@ public class RecipeDaoImpl implements RecipeDao {
         try {
             em.getTransaction().begin();
             recipe = em.find(Recipe.class, id);
-            if (recipe != null) {
+            if(recipe != null) {
                 Hibernate.initialize(recipe.getIngredients());
                 Hibernate.initialize(recipe.getReviews());
             }

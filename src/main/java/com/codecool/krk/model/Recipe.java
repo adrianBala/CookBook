@@ -107,6 +107,7 @@ public class Recipe {
     }
 
     public void addReview(Review review) {
+        review.setRecipe(this);
         this.reviews.add(review);
     }
 
