@@ -1,1 +1,1 @@
-# java-ee-rest-api-babeczki-z-rodzynkiem
+# java-ee-rest-api-cookBook
