@@ -1,20 +1,23 @@
 package com.codecool.krk.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
 public class Ingredient {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
     @Column(name="name")
     private String name;
     @Column(name="amount")
     private double amount;
-    @Column(name="unit")
+    @Enumerated(EnumType.STRING)
     private Unit unit;
 
     @ManyToOne
+    @JsonBackReference
     private Recipe recipe;
 
     public Ingredient() {}
